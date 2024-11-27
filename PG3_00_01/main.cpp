@@ -1,43 +1,48 @@
 #include <stdio.h>
-#include <iostream>
 
-/*クラス名「TemplateClass」で複数クラステンプレートを定義*/
-{
+using namespace std;
+
+// テンプレートクラス Min: 2つの異なる型の値を比較し、大きい値を返すクラス
+template<typename T1, typename T2>
+class Min {
 public:
-	//コンストラクタ（メンバ変数Number1,Number2を引数number1,number2で初期化）
-	TemplateClass(Type number1, Type2 number2) :
-		Number1(number1), Number2(number2) {}
+    T1 value1; // 1つ目の値
+    T2 value2; // 2つ目の値
 
-	Type Min()
-	{
-		if (/*Number1よりNumber2が小さかったら？*/)
-		{
-			return static_cast<Type>(Number1);
-		}
-		else {
-			return static_cast<Type2>(Number2);
-		}
-	};
-private:
-	/*Type,Type2を使ってNumber1と2を定義*/
+    // コンストラクタ: 2つの値を初期化
+    Min(T1 val1, T2 val2) : value1(val1), value2(val2) {}
+
+    // 大きい値を返すメンバ関数
+    T1 getMax() {
+        if (value1 > value2) {
+            return static_cast<T1>(value1);
+        }
+        else {
+            return static_cast<T1>(value2);
+        }
+    }
 };
 
-int main() {
+int main(void) {
+    // 同じ型の比較例
+    Min<int, int> answerInt(1, 2); // int型の比較
+    Min<float, float> answerFloat(4.5f, 4.2f); // float型の比較
+    Min<double, double> answerDouble(1.0, 1.2); // double型の比較
 
-	/*クラス名から型を考えて<>の中を定義*/
-	TemplateClass</*?*/, /*?*/> intFloatTemplate(10, 50.0f);
-	TemplateClass</*?*/, /*?*/> intDoubleTemplate(80, 13.0);
-	TemplateClass</*?*/, /*?*/> floatIntTemplate(2.0f, 9);
-	TemplateClass</*?*/, /*?*/> floatDoubleTemplate(11.0f, 3.5);
-	TemplateClass</*?*/, /*?*/> doubleIntTemplate(666.0, 333);
-	TemplateClass</*?*/, /*?*/> doubleFloatTemplate(435.8, 563.5f);
+    // 結果を出力
+    printf("%d\n", answerInt.getMax()); // int型
+    printf("%0.1f\n", answerFloat.getMax()); // float型
+    printf("%0.1f\n", answerDouble.getMax()); // double型
 
-	std::cout << "int(10)　と float(50.0f) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
-	std::cout << "int(80)　と double(13.0) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
-	std::cout << "float(2.0f)　と int(9) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
-	std::cout << "float(11.0f)　と double(3.5) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
-	std::cout << "double(666.0)　と int(333) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
-	std::cout << "double(435.8)　と float(563.5) を比べて小さい数字を表す：" << /*?*/.Min() << std::endl;
+    // 異なる型の比較例
+    Min<float, int> exampleMixed1(23.4f, 23); // float と int 型の比較
+    Min<float, double> exampleMixed2(20.01f, 20.05); // float と double 型の比較
+    Min<double, int> exampleMixed3(10.99, 11); // double と int 型の比較
 
-	return 0;
+    // 結果を出力
+    printf("%0.1f\n", exampleMixed1.getMax()); // float型で出力
+    printf("%0.2f\n", exampleMixed2.getMax()); // float型で出力
+    printf("%0.1f\n", exampleMixed3.getMax()); // float型で出力
+
+    return 0;
 }
